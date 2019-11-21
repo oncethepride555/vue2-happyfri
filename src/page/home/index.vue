@@ -1,4 +1,5 @@
 <template>
+    <!-- 首页 -->
   	<div class="home_container">
         <itemcontainer father-component="home"></itemcontainer>
     </div>

@@ -1,8 +1,9 @@
 <template>
   	<div>
+        <!-- 最后的得分页 -->
     	<div class="your_scores_container">
             <header class="your_scores"><span class="score_num">{{score}}</span><span class="fenshu">分！</span></header>
-            <div class="result_tip">{{scoreTips}}</div>
+            <div class="result_tip">{{scoreTips}}---用时：{{$store.state.allTime}}秒</div>
         </div>
         <div class="share_button" @click="showCover"></div>
         <div class="share_code">
@@ -24,7 +25,7 @@ export default {
             showHide: false, //是否显示提示
             score: 0, //分数
             scoreTips:'', //分数提示
-            rightAnswer: [2, 7, 12, 13, 18], //正确答案
+            rightAnswer: [2, 7, 12, 13, 18], //正确答案的topic_answer_id
             scoreTipsArr:['你说，是不是把知识都还给小学老师了？','还不错，但还需要继续加油哦！','不要嘚瑟还有进步的空间！','智商离爆表只差一步了！','你也太聪明啦，葡萄之家欢迎你！'],
         }
     },
@@ -36,7 +37,7 @@ export default {
     },
     methods: {
         //计算分数
-        computedScore(){
+        computedScore(){ //选择答案的时候，将选择的答案 topic_answer_id 给了 choosedid, 在点击下一题的时候，把choosedid push到answerid数组中了;最后一题的choosedid 在点击提交按钮的时候，push 到 answerid 数组中的。
             this.answerid.forEach((item, index) => {
                 if (item == this.rightAnswer[index]) {
                     this.score += 20;
@@ -49,7 +50,7 @@ export default {
         },
         //根据分数显示提示
         getScoreTip: function (){
-          let index = Math.ceil(this.score/20)-1;
+          let index = Math.ceil(this.score/20)-1; // ceil 天花板，向上取整
           this.scoreTips = this.scoreTipsArr[index];
         }
     },
