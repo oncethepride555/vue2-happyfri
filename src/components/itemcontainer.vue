@@ -21,16 +21,19 @@
           <header class="item_title">{{itemDetail[itemNum-1].topic_name}}</header>
           <ul>
             <!-- 循环ABCD四个答案 -->
-            <li 
+            <li
               v-for="(item, index) in itemDetail[itemNum-1].topic_answer"
               @click="choosed(index, item.topic_answer_id)"
               class="item_list"
               :key="item.topic_answer_id"
             >
+              <!-- item.topic_answer_id 每一个答案的id，唯一的 -->
               <span
                 class="option_style"
                 v-bind:class="{'has_choosed':choosedNum==index}"
               >{{chooseType(index)}}</span>
+              <!-- 动态绑定class，如果choosedNum == index,则绑定has_choosed样式类 -->
+              <!-- 点击某个答案的时候，会触发choosed事件，把index的值赋给choosedNum -->
               <span class="option_detail">{{item.answer_name}}</span>
             </li>
           </ul>
@@ -46,7 +49,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-// import {mapState} from "vuex"; // 引入mapState 
+// import {mapState} from "vuex"; // 引入mapState
 export default {
   name: "itemcontainer",
   data() {
@@ -57,10 +60,12 @@ export default {
     };
   },
   props: ["fatherComponent"],
-  computed: { // 如果computed的值是一个对象的话，mapState前要加...
-  //如果不写...  就把{}去掉
-  //mapState 函数返回的是一个对象。通过 对象展开运算符（...） 将多个对象合并为一个,以使我们可以将最终对象传给 computed 属性
-    ...mapState([ // mapState 将 state 直接映射到 现在这个组件中，不用写 $store.state.*** 了
+  computed: {
+    // 如果computed的值是一个对象的话，mapState前要加...
+    //如果不写...  就把{}去掉
+    //mapState 函数返回的是一个对象。通过 对象展开运算符（...） 将多个对象合并为一个,以使我们可以将最终对象传给 computed 属性
+    ...mapState([
+      // mapState 将 state 直接映射到 现在这个组件中，不用写 $store.state.*** 了
       // 这几个数据在 store/index.js中的state中声明了，在这里写在mapState中后，调用的时候就不用写 $store.state.*** 了，直接插值
       "itemNum", //第几题
       "level", //第几周
@@ -69,13 +74,19 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(["addNum", "initializeData"]),
+    ...mapActions(["initializeData"]),
     //点击下一题
-    nextItem() {
+    nextItem() {   
       if (this.choosedNum !== null) {
+        console.log('1');
         this.choosedNum = null;
         //保存答案, 题目索引加一，跳到下一题
-        this.addNum(this.choosedId);
+        // this.addNum(this.choosedId);
+        console.log('2');
+        this.$store.commit("REMBER_ANSWER", this.choosedId);
+        if (this.$store.state.itemNum < this.$store.state.itemDetail.length) {
+          this.$store.commit("ADD_ITEMNUM", 1); // 进入下一题，让 itemNum + 1
+        }
       } else {
         alert("您还没有选择答案哦");
       }
