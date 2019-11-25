@@ -12,17 +12,17 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
     entry: {
-        app: './src/main.js'
+        app: './src/main.js'  // 配置webpack编译入口
     },
     output: {
-        path: config.build.assetsRoot,
-        publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
-        filename: '[name].js'
+        path: config.build.assetsRoot, // webpack输出的目标文件夹路径（例如：/dist）
+        publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath, // webpack编译输出的发布路径(判断是正式环境或者开发环境等)
+        filename: '[name].js' // webpack输出bundle文件命名格式，基于文件的md5生成Hash名称的script来防止缓存
     },
     resolve: {
-        extensions: ['', '.js', '.vue', '.less', '.css', '.scss'],
+        extensions: ['', '.js', '.vue', '.less', '.css', '.scss'],//自动解析确定的拓展名,使导入模块时不带拓展名
         fallback: [path.join(__dirname, '../node_modules')],
-        alias: {
+        alias: { // 创建import或require的别名，一些常用的，路径长的都可以用别名
             'vue$': 'vue/dist/vue.common.js',
             'src': path.resolve(__dirname, '../src'),
             'assets': path.resolve(__dirname, '../src/assets'),

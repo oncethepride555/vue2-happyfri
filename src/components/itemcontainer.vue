@@ -74,19 +74,19 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(["initializeData"]),
+    ...mapActions(["addNum","initializeData"]),
     //点击下一题
     nextItem() {   
       if (this.choosedNum !== null) {
-        console.log('1');
+        // console.log('1');
         this.choosedNum = null;
         //保存答案, 题目索引加一，跳到下一题
-        // this.addNum(this.choosedId);
-        console.log('2');
-        this.$store.commit("REMBER_ANSWER", this.choosedId);
-        if (this.$store.state.itemNum < this.$store.state.itemDetail.length) {
-          this.$store.commit("ADD_ITEMNUM", 1); // 进入下一题，让 itemNum + 1
-        }
+        this.addNum(this.choosedId);
+        // console.log('2');
+        // this.$store.commit("REMBER_ANSWER", this.choosedId);
+        // if (this.$store.state.itemNum < this.$store.state.itemDetail.length) {
+        //   this.$store.commit("ADD_ITEMNUM", 1); // 进入下一题，让 itemNum + 1
+        // }
       } else {
         alert("您还没有选择答案哦");
       }
