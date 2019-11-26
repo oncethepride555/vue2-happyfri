@@ -4,10 +4,12 @@ var path = require('path')
 module.exports = {
     build: { // 生产环境
         env: {NODE_ENV: '"production"'},
-        index: path.resolve(__dirname, '../dist/index.html'), // 编译输入的 index.html 文件
-        assetsRoot: path.resolve(__dirname, '../dist'), // 编译输出的静态资源路径
-        assetsSubDirectory: 'static', // 编译输出的二级目录
-        assetsPublicPath: '/happyfri/', // 编译发布的根目录，可配置为资源服务器域名或 CDN 域名
+        index: path.resolve(__dirname, '../dist/index.html'), 
+        assetsRoot: path.resolve(__dirname, '../dist'), 
+        assetsSubDirectory: 'static', 
+        assetsPublicPath: '/', 
+        /* 总结1 编译后 index.html 引用文件的路径是 先 assetsPublicPath，再 assetsSubDirectory，最后 编译成的静态资源自个儿 */
+        /* 总结2 编译后静态资源所在目录为：先 assetsRoot，再 assetsSubDirectory */
         productionSourceMap: true,
         // Gzip off by default as many popular static hosts such as
         // Surge or Netlify already gzip all static assets for you.
