@@ -7,7 +7,7 @@ module.exports = {
         index: path.resolve(__dirname, '../dist/index.html'), 
         assetsRoot: path.resolve(__dirname, '../dist'), 
         assetsSubDirectory: 'static', 
-        assetsPublicPath: '/', 
+        assetsPublicPath: '/vue2-happyfri/', 
         /* 总结1 编译后 index.html 引用文件的路径是 先 assetsPublicPath，再 assetsSubDirectory，最后 编译成的静态资源自个儿 */
         /* 总结2 编译后静态资源所在目录为：先 assetsRoot，再 assetsSubDirectory */
         productionSourceMap: true,
